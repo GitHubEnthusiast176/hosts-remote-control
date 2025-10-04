@@ -6,22 +6,52 @@
   "intervalSeconds": "30",
   "logRetentionDays": "7",
   "hostsEntries": [
-    "youtube.com",
-    "www.youtube.com",
-    "m.youtube.com",
-    "youtu.be",
-    "img.youtube.com",
-    "s.ytimg.com",
-    "music.youtube.com",
-    "gaming.youtube.com", 
-    "studio.youtube.com", 
-    "kids.youtube.com", 
-    "youtube-nocookie.com", 
-    "ytimg.com", 
-    "i.ytimg.com", 
-    "googlevideo.com",    
-    "tiktok.com",
-    "www.tiktok.com",
-    "discord.com"
-  ]
+  // --- YouTube ---
+  "youtube.com", "www.youtube.com", "m.youtube.com",
+  "youtu.be", "music.youtube.com", "gaming.youtube.com",
+  "studio.youtube.com", "kids.youtube.com",
+  "youtube-nocookie.com", "ytimg.com", "i.ytimg.com", "s.ytimg.com",
+  "googlevideo.com", "redirector.googlevideo.com", "manifest.googlevideo.com",
+  "lh3.googleusercontent.com",
+
+  // --- TikTok ---
+  "tiktok.com", "www.tiktok.com", "m.tiktok.com",
+  "api.tiktokv.com", "api.tiktok.com",
+  "p16-tiktokcdn-com.akamaized.net",
+  "v19.tiktokcdn.com", "v16m.tiktokcdn.com",
+
+  // --- Discord ---
+  "discord.com", "www.discord.com",
+  "cdn.discordapp.com", "discordapp.net",
+
+  // --- Telegram ---
+  "t.me", "telegram.me", "telegram.org",
+  "core.telegram.org", "api.telegram.org",
+  "web.telegram.org", "webk.telegram.org", "webz.telegram.org",
+  "cdn-telegram.org",
+
+  // --- Roblox ---
+  "roblox.com", "www.roblox.com", "m.roblox.com",
+  "api.roblox.com", "trades.roblox.com",
+  "setup.roblox.com", "assetdelivery.roblox.com",
+  "robloxcdn.com", "rbxcdn.com",
+
+  // --- Minecraft (основное) ---
+  "minecraft.net", "www.minecraft.net",
+  "account.mojang.com", "api.mojang.com",
+  "mojang.com", "authserver.mojang.com",
+  "textures.minecraft.net",
+
+  // --- Twitch ---
+  "twitch.tv", "www.twitch.tv", "static-cdn.jtvnw.net",
+
+  // --- Instagram ---
+  "instagram.com", "www.instagram.com", "cdninstagram.com",
+
+  // --- Snapchat ---
+  "snapchat.com", "www.snapchat.com",
+
+  // --- Reddit ---
+  "reddit.com", "www.reddit.com", "old.reddit.com"
+]
 }
