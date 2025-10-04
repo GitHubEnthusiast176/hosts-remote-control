@@ -100,6 +100,38 @@ Additional files:
 - `logRetentionDays` — Number of days to keep log files
 - `hostsEntries` — Array of domains to block/allow
 
+## Scheduling with Windows Task Scheduler
+
+You can schedule the application to run automatically using Windows Task Scheduler:
+
+1. **Open Task Scheduler** (search for "Task Scheduler" in Start menu)
+2. **Create Basic Task**:
+   - Name: "Hosts Remote Control"
+   - Description: "Automatically manages website blocking via GitHub status"
+3. **Set Trigger**:
+   - Choose "When the computer starts" or "At startup"
+   - Or set a custom schedule (e.g., every 5 minutes)
+4. **Set Action**:
+   - Action: "Start a program"
+   - Program: Path to your `hosts-remote-control.exe`
+   - Start in: Directory containing `config.json`
+5. **Configure Settings**:
+   - Check "Run whether user is logged on or not"
+   - Check "Run with highest privileges" (required for hosts file access)
+   - Check "Hidden" (optional, runs in background)
+
+### How Scheduling Works:
+- The application runs continuously and checks GitHub every `intervalSeconds` (configured in `config.json`)
+- **Status `0`** in `status.txt` → Blocks access to predefined websites by adding entries to hosts file
+- **Status `1`** in `status.txt` → Allows access by commenting out hosts file entries
+- The application automatically handles DNS cache flushing after each change
+- Logs all activities to `control.log` for monitoring
+
+### Recommended Schedule Settings:
+- **Trigger**: "At startup" (runs once when Windows starts)
+- **Interval**: Let the application handle its own timing via `intervalSeconds` setting
+- **Alternative**: Set Task Scheduler to run every few minutes if you prefer external control
+
 ## Security Notes
 - **Requires Administrator privileges** to modify the hosts file
 - **Never commit `config.json`** with real GitHub tokens
