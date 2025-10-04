@@ -6,6 +6,13 @@
     <RootNamespace>hosts_remote_control</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <AssemblyTitle>Hosts Remote Control</AssemblyTitle>
+    <AssemblyVersion>1.0.1.0</AssemblyVersion>
+    <FileVersion>1.0.1.0</FileVersion>
+    <Product>Hosts Remote Control</Product>
+    <Authors>Dmitri</Authors>
+    <Copyright>© 2025 Dmitri</Copyright>
+    <Description>Utility for remote parental control via GitHub</Description>
   </PropertyGroup>
-
+  
 </Project>
