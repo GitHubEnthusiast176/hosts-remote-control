@@ -1,0 +1,26 @@
+{
+  token ghp_xxxYourTokenxxx,
+  owner YOUR_GITHUB_USERNAME,
+  repo yt-control,
+  filePath status.txt,
+  intervalSeconds 30,
+  hostsEntries [
+    "youtube.com",
+    "www.youtube.com",
+    "m.youtube.com",
+    "youtu.be",
+    "img.youtube.com",
+    "s.ytimg.com",
+    "music.youtube.com",
+    "gaming.youtube.com", 
+    "studio.youtube.com", 
+    "kids.youtube.com", 
+    "youtube-nocookie.com", 
+    "ytimg.com", 
+    "i.ytimg.com", 
+    "googlevideo.com",    
+    "tiktok.com",
+    "www.tiktok.com",
+    "discord.com"
+  ]
+}

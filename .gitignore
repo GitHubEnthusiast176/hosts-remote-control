@@ -1,0 +1,5 @@
+bin/
+obj/
+config.json
+local_status.txt
+control.log
