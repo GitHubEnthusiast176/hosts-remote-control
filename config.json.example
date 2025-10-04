@@ -4,6 +4,7 @@
   "repo": "yt-control",
   "filePath": "status.txt",
   "intervalSeconds": "30",
+  "logRetentionDays": "7",
   "hostsEntries": [
     "youtube.com",
     "www.youtube.com",

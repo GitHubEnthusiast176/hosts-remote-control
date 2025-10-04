@@ -12,17 +12,21 @@ class Program
     private static string repo = "";
     private static string filePath = "";
     private static int intervalSeconds = 30;
+    private static int logRetentionDays = 7;   // настройка для хранения логов
     private static List<string> hostsEntries = new List<string>();
 
     private const string hostsPath = @"C:\Windows\System32\drivers\etc\hosts";
     private static string logPath = Path.Combine(AppContext.BaseDirectory, "control.log");
     private static string localStatusPath = Path.Combine(AppContext.BaseDirectory, "local_status.txt");
 
+    private static DateTime lastLogCleanup = DateTime.MinValue;
+
     static async Task Main()
     {
         try
         {
             LoadConfig();
+            CleanupLog();   // проверка и очистка логов при запуске
             Log("App started");
 
             while (true)
@@ -79,6 +83,11 @@ class Program
         if (config.ContainsKey("hostsEntries"))
         {
             hostsEntries = JsonSerializer.Deserialize<List<string>>(config["hostsEntries"].ToString()) ?? new List<string>();
+        }
+
+        if (config.ContainsKey("logRetentionDays"))
+        {
+            int.TryParse(config["logRetentionDays"].ToString(), out logRetentionDays);
         }
     }
 
@@ -196,7 +205,46 @@ class Program
     {
         try
         {
+            // Раз в сутки проверяем и чистим лог
+            if ((DateTime.Now - lastLogCleanup).TotalHours >= 24)
+            {
+                CleanupLog();
+                lastLogCleanup = DateTime.Now;
+            }
+
             File.AppendAllText(logPath, $"{DateTime.Now:yyyy-MM-dd HH:mm:ss} {message}{Environment.NewLine}");
+        }
+        catch
+        {
+            // ignore
+        }
+    }
+
+    static void CleanupLog()
+    {
+        try
+        {
+            if (!File.Exists(logPath)) return;
+
+            var lines = File.ReadAllLines(logPath);
+            var cutoff = DateTime.Now.AddDays(-logRetentionDays);
+
+            var filtered = new List<string>();
+            foreach (var line in lines)
+            {
+                if (line.Length >= 19 && DateTime.TryParse(line.Substring(0, 19), out var ts))
+                {
+                    if (ts >= cutoff)
+                        filtered.Add(line);
+                }
+                else
+                {
+                    filtered.Add(line);
+                }
+            }
+
+            File.WriteAllLines(logPath, filtered);
+            Log($"Log cleanup complete, retained {filtered.Count} lines (cutoff {cutoff:yyyy-MM-dd})");
         }
         catch
         {
