@@ -244,7 +244,7 @@ class Program
             }
 
             File.WriteAllLines(logPath, filtered);
-            Log($"Log cleanup complete, retained {filtered.Count} lines (cutoff {cutoff:yyyy-MM-dd})");
+            // ⚠️ Больше не вызываем Log() здесь → убрали рекурсию
         }
         catch
         {
