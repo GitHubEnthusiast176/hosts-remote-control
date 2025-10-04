@@ -10,14 +10,47 @@ The state (`block` or `allow`) is controlled remotely via a `status.txt` file st
   - `0` = Block websites
   - `1` = Allow websites (comment out entries)
 - Keeps a local `local_status.txt` to avoid unnecessary changes.
-- Logs all actions to `control.log`.
+- Logs all actions to `control.log` with automatic log rotation.
 - Automatically flushes DNS cache after every change.
 
-## Files
-- `Program.cs` — source code
-- `config.example.json` — configuration template
-- `.gitignore` — excludes sensitive files (like `config.json`)
-- `status.txt` — remote control file (stored in a separate GitHub repo)
+## Installation
+
+1. Clone this repository
+2. Copy `config.json.example` to `config.json`
+3. Edit `config.json` with your GitHub credentials
+4. Build the project using the commands below
+5. Run as Administrator (required for hosts file access)
+
+## Build Commands
+
+```bash
+# Clean previous builds
+dotnet clean
+
+# Build the project
+dotnet build
+
+# Run the application
+dotnet run
+
+# Publish as self-contained executable
+dotnet publish -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true
+```
+
+### Build Options Explained:
+- `-c Release` → Release mode build
+- `-r win-x64` → Build for Windows 64-bit
+- `--self-contained true` → Executable works even if .NET is not installed
+- `-p:PublishSingleFile=true` → Package everything into a single exe file
+
+## Required Files
+
+The `hosts-remote-control.exe` requires two files for operation:
+- `config.json` — Configuration file with GitHub credentials and settings
+- `local_status.txt` — Local status tracking file (created automatically)
+
+Additional files:
+- `control.log` — Log file for application events (auto-rotated based on `logRetentionDays` setting in config.json)
 
 ## How it works
 1. The app checks `status.txt` in your GitHub repository.
@@ -30,15 +63,45 @@ The state (`block` or `allow`) is controlled remotely via a `status.txt` file st
 ## Example config.json
 ```json
 {
-  "token": "YOUR_GITHUB_TOKEN",
-  "owner": "YOUR_USERNAME",
-  "repo": "yt-control-state",
+  "token": "ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxx",
+  "owner": "YOUR_GITHUB_USERNAME",
+  "repo": "hosts-remote-control",
   "filePath": "status.txt",
   "intervalSeconds": "30",
+  "logRetentionDays": "7",
   "hostsEntries": [
     "youtube.com",
     "www.youtube.com",
+    "m.youtube.com",
+    "youtu.be",
+    "img.youtube.com",
+    "s.ytimg.com",
+    "music.youtube.com",
+    "gaming.youtube.com", 
+    "studio.youtube.com", 
+    "kids.youtube.com", 
+    "youtube-nocookie.com", 
+    "ytimg.com", 
+    "i.ytimg.com", 
+    "googlevideo.com",    
     "tiktok.com",
+    "www.tiktok.com",
     "discord.com"
   ]
 }
+```
+
+### Configuration Options:
+- `token` — GitHub personal access token
+- `owner` — GitHub username or organization name
+- `repo` — Repository name (without full URL)
+- `filePath` — Path to the status file in the repository
+- `intervalSeconds` — How often to check for status changes
+- `logRetentionDays` — Number of days to keep log files
+- `hostsEntries` — Array of domains to block/allow
+
+## Security Notes
+- **Requires Administrator privileges** to modify the hosts file
+- **Never commit `config.json`** with real GitHub tokens
+- Keep GitHub token permissions minimal (only repo access needed)
+- The application modifies system files - ensure you trust the source
