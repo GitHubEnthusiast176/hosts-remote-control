@@ -1,7 +1,7 @@
 {
-  "token": "ghp_xxxYourTokenxxx",
-  "owner": "YOUR_GITHUB_USERNAME",
-  "repo": "yt-control",
+  "token": "ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxx",
+  "owner": "XXXXXXXXXXXXXXXXXXXXXXXX",
+  "repo": "hosts-remote-control",
   "filePath": "status.txt",
   "intervalSeconds": "30",
   "logRetentionDays": "7",
