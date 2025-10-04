@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.IO;
 using System.Net.Http.Headers;
 using System.Text.Json;
@@ -20,40 +20,47 @@ class Program
 
     static async Task Main()
     {
-        LoadConfig();
-        Log("App started");
-
-        while (true)
+        try
         {
-            try
-            {
-                string remoteStatus = await GetStatusFromGitHub();
-                string localStatus = GetLocalStatus();
+            LoadConfig();
+            Log("App started");
 
-                if (remoteStatus != localStatus)
+            while (true)
+            {
+                try
                 {
-                    if (remoteStatus == "0")
+                    string remoteStatus = await GetStatusFromGitHub();
+                    string localStatus = GetLocalStatus();
+
+                    if (remoteStatus != localStatus)
                     {
-                        BlockHosts();
-                        SetLocalStatus("0");
-                    }
-                    else if (remoteStatus == "1")
-                    {
-                        AllowHosts();
-                        SetLocalStatus("1");
-                    }
-                    else
-                    {
-                        Log($"Unknown remote status: {remoteStatus}");
+                        if (remoteStatus == "0")
+                        {
+                            BlockHosts();
+                            SetLocalStatus("0");
+                        }
+                        else if (remoteStatus == "1")
+                        {
+                            AllowHosts();
+                            SetLocalStatus("1");
+                        }
+                        else
+                        {
+                            Log($"Unknown remote status: {remoteStatus}");
+                        }
                     }
                 }
-            }
-            catch (Exception ex)
-            {
-                Log($"Error: {ex.Message}");
-            }
+                catch (Exception ex)
+                {
+                    Log($"Error in loop: {ex}");
+                }
 
-            await Task.Delay(TimeSpan.FromSeconds(intervalSeconds));
+                await Task.Delay(TimeSpan.FromSeconds(intervalSeconds));
+            }
+        }
+        catch (Exception ex)
+        {
+            Log($"Fatal error: {ex}");
         }
     }
 
@@ -179,7 +186,7 @@ class Program
         }
         catch (Exception ex)
         {
-            Log($"FlushDNS error: {ex.Message}");
+            Log($"FlushDNS error: {ex}");
         }
     }
 

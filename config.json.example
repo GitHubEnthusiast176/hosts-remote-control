@@ -1,10 +1,10 @@
 {
-  token ghp_xxxYourTokenxxx,
-  owner YOUR_GITHUB_USERNAME,
-  repo yt-control,
-  filePath status.txt,
-  intervalSeconds 30,
-  hostsEntries [
+  "token": "ghp_xxxYourTokenxxx",
+  "owner": "YOUR_GITHUB_USERNAME",
+  "repo": "yt-control",
+  "filePath": "status.txt",
+  "intervalSeconds": "30",
+  "hostsEntries": [
     "youtube.com",
     "www.youtube.com",
     "m.youtube.com",
